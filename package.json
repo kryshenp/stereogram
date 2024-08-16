@@ -1,7 +1,6 @@
 {
 	"name": "stereogram",
 	"version": "1.0.0",
-	"type": "module",
 	"description": "Stereogram technical task",
 	"main": "cypress/support/index.js",
 	"scripts": {

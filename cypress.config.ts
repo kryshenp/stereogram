@@ -3,7 +3,6 @@ import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-
 	e2e: {
 		baseUrl: "https://piellardj.github.io/stereogram-solver/",
 		chromeWebSecurity: false,
