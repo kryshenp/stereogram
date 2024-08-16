@@ -30,8 +30,7 @@ jobs:
               if: always()
               run: |
                   mkdir -p results/snapshots
-                  SPEC_PATTERN="cypress/snapshots/*.spec.ts"
-                  find cypress/snapshots -regextype posix-egrep -regex "$SPEC_PATTERN" -exec cp -r {} results/snapshots \;
+                  if [ -d "cypress/snapshots" ]; then cp -r cypress/snapshots/* results/snapshots; fi
 
             - name: Archive artifacts
               if: always()
