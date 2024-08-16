@@ -4,6 +4,8 @@
 	"description": "Stereogram technical task",
 	"main": "cypress/support/index.js",
 	"scripts": {
+		"merge-reports": "mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json",
+		"generate-report": "marge cypress/reports/mochawesome.json -f report -o cypress/reports",
 		"open": "cypress open --browser electron --e2e",
 		"test": "cypress run --browser electron --e2e"
 	},
@@ -31,6 +33,8 @@
 		"@simonsmith/cypress-image-snapshot": "^9.1.0",
 		"babel-loader": "^9.1.3",
 		"cypress": "^13.2.9",
+		"cypress-mochawesome-reporter": "^3.8.2",
+		"mochawesome": "^7.1.3",
 		"typescript": "^5.5.4",
 		"webpack": "^5.93.0"
 	}

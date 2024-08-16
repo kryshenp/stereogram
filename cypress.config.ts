@@ -15,10 +15,18 @@ export default defineConfig({
         webpackOptions: require("./webpack.cypress"),
         watchOptions: {},
       };
+      require("cypress-mochawesome-reporter/plugin")(on);
       addMatchImageSnapshotPlugin(on);
       on("file:preprocessor", webpack(options));
 
       return config;
     },
+  },
+  reporter: "cypress-mochawesome-reporter",
+  reporterOptions: {
+    reportDir: "cypress/reports",
+    overwrite: false,
+    html: false,
+    json: true,
   },
 });

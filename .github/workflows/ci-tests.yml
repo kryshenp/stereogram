@@ -45,6 +45,12 @@ jobs:
                   mkdir -p results/snapshots
                   if [ -d "cypress/snapshots" ]; then cp -r cypress/snapshots/* results/snapshots; fi
 
+            - name: Store Mochawesome report
+              if: always()
+              run: |
+                  mkdir -p results/reports
+                  if [ -d "cypress/reports" ]; then cp -r cypress/reports/* results/reports; fi
+
             - name: Archive artifacts
               if: always()
               uses: actions/upload-artifact@v4
