@@ -8,3 +8,6 @@ cypress/screenshots
 
 # Mochawesome reports
 cypress/reports
+
+# VScode
+.vscode

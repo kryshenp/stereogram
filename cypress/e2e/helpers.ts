@@ -8,4 +8,4 @@
  * @param toleranceInPercent percentual value of tolerated difference
  * @returns failureThreshold option for matchImageSnapshot
  */
-export const customToleranceForCI = (toleranceInPercent: number) => Cypress.env("GHA") ? {failureThreshold: toleranceInPercent / 100} : {}
+export const customToleranceForCI = (toleranceInPercent: number) => Cypress.env("GHA") ? { failureThreshold: toleranceInPercent / 100 } : {};
