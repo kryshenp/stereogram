@@ -15,4 +15,4 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Run Cypress tests in Docker
-              run: docker run -it -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.0
+              run: docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.0
