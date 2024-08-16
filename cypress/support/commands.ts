@@ -1,4 +1,8 @@
 Cypress.Commands.add("moveSliderToPosition", (positionPercentual: number): void => {
+  if (positionPercentual < 0 || positionPercentual > 100) {
+    throw new Error("Slider position must be between 0 and 100.");
+  }
+
   cy.get(".full-width-range").invoke("attr", "max").then(sliderWidth => {
     const numWidth = Number(sliderWidth);
     const displacement = Math.ceil(numWidth * positionPercentual / 100);

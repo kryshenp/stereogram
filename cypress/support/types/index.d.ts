@@ -1,8 +1,10 @@
 declare namespace Cypress {
   interface Chainable {
     /**
-     * @param positionPercentual - percentual value of filter overlap - from 0 to 100
-     * @example - cy.moveSliderToPosition(50); to move filter to the middle of the image
+     * Moves the slider to the specified percentage position.
+     *
+     * @param positionPercentual - Percentage value of filter overlap, ranging from 0 to 100.
+     * @example - cy.moveSliderToPosition(50); // Moves the filter slider to the middle of the image.
      */
     moveSliderToPosition(positionPercentual: number): void;
   }

@@ -1,3 +1,6 @@
+import { customToleranceForCI } from "./helpers";
+
+
 describe("Stereogram solver", () => {
   beforeEach(() => {
     cy.visit("https://piellardj.github.io/stereogram-solver/");
@@ -14,19 +17,15 @@ describe("Stereogram solver", () => {
       cy.get("img").invoke("attr", "src").then((initialImageSrc) => {
         cy.get("#preset-select").select(`${preset}.jpg`, {force: true});
         cy.get("#preset-select").should("have.value", `${preset}.jpg`);
-        cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc); // need to wait for image change to get the new slider size
+        cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc); // need to wait for image size to reflect image change
       }).then(() => {
         cy.get(".full-width-range").invoke("attr", "max").then(width => {
-          const numberWidth = Number(width);
-
-          expect(numberWidth).to.be.gt(0);
+          expect(Number(width)).to.be.gt(0);
           cy.get("img").matchImageSnapshot(`${preset}_original`);
 
           sliderPositions.forEach(sliderPosition => {
             cy.moveSliderToPosition(sliderPosition);
-
-            // by setting failure treshold option to 0.12% we handle the bottom row px difference between images in CI
-            cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`, Cypress.env("GHA") ? {failureThreshold: 0.0012} : {});
+            cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`, customToleranceForCI(0.12));
           });
         });
       });
@@ -37,11 +36,10 @@ describe("Stereogram solver", () => {
     cy.get("#image-upload").invoke("val").should("match", /lynch_weather_report.png$/);
     cy.get("#preset-select").should("have.value", null);
     cy.get("img").matchImageSnapshot(`lynch_weather_report_original`);
+
     sliderPositions.forEach(sliderPosition => {
       cy.moveSliderToPosition(sliderPosition);
-
-      // by setting failure treshold option to 0.12% we handle the bottom row px difference between images in CI
-      cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`, Cypress.env("GHA") ? {failureThreshold: 0.0012} : {});
+      cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`, customToleranceForCI(0.12));
     });
   });
 });
