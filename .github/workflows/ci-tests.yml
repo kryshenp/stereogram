@@ -30,7 +30,7 @@ jobs:
               if: always()
               run: |
                   mkdir -p results/snapshots
-                  SPEC_PATTERN="cypress/snapshots/${{ 'stereogramSolverInMultipleTests' || 'stereogramSolverInSingleTest' }}.spec.ts"
+                  SPEC_PATTERN="cypress/snapshots/*.spec.ts"
                   find cypress/snapshots -regextype posix-egrep -regex "$SPEC_PATTERN" -exec cp -r {} results/snapshots \;
 
             - name: Archive artifacts
