@@ -24,14 +24,14 @@ jobs:
               if: always()
               run: |
                   mkdir -p results
-                  if [ -d "cypress/screenshots" ]; then cp -r screenshots results/screenshots; fi
+                  if [ -d "cypress/screenshots" ]; then cp -r cypress/screenshots results/screenshots; fi
 
             - name: Store Snapshots
               if: always()
               run: |
                   mkdir -p results/snapshots
-                  SPEC_PATTERN="cypress/snapshots/${{'stereogramSolverInMultipleTests' || 'stereogramSolverInSingleTest' }}.spec.ts"
-                  find snapshots -regextype posix-egrep -regex "$SPEC_PATTERN" -exec cp -r {} results/snapshots \;
+                  SPEC_PATTERN="cypress/snapshots/${{ 'stereogramSolverInMultipleTests' || 'stereogramSolverInSingleTest' }}.spec.ts"
+                  find cypress/snapshots -regextype posix-egrep -regex "$SPEC_PATTERN" -exec cp -r {} results/snapshots \;
 
             - name: Archive artifacts
               if: always()
