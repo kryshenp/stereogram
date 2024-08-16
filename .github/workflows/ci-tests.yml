@@ -14,5 +14,8 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Install dependencies
+              run: npm install ts-node typescript
+
             - name: Run Cypress tests in Docker
-              run: docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.0
+              run: docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.0 npx ts-node cypress run
