@@ -5,6 +5,17 @@ on:
         branches:
             - main
     workflow_dispatch:
+        inputs:
+            update-snapshots:
+                description: "Update snapshots"
+                required: true
+                type: choice
+                options:
+                    - "false"
+                    - "true"
+                default: "false"
+env:
+    UPDATE_SNAPSHOTS: ${{ github.event.inputs.update-snapshots || 'false' }}
 
 jobs:
     cypress-tests:
@@ -18,7 +29,9 @@ jobs:
               run: npm install ts-node typescript
 
             - name: Run Cypress tests in Docker
-              run: docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.3 npx ts-node cypress run
+              run:
+                  docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.3 \
+                  npx ts-node cypress run --env GHA=true,updateSnapshots=${{ env.UPDATE_SNAPSHOTS }}
 
             - name: Store Test Results
               if: always()

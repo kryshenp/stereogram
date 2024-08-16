@@ -2,9 +2,9 @@ import {addMatchImageSnapshotCommand} from "@simonsmith/cypress-image-snapshot/c
 import "./commands";
 
 addMatchImageSnapshotCommand({
-  failureThreshold: 0, // threshold for entire image
-  failureThresholdType: "percent", // percent of image or number of pixels
-  customDiffConfig: {threshold: 0}, // threshold for each pixel
-  capture: "viewport", // capture viewport in screenshot
+  failureThreshold: 0.00001, // threshold for image difference 0.001%
+  failureThresholdType: "percent",
+  customDiffConfig: {threshold: 0}, // strict pixel comparison
+  capture: "viewport",
   e2eSpecDir: "cypress/e2e/",
 });

@@ -11,7 +11,6 @@ describe("Stereogram solver", () => {
       sliderPositions.forEach(sliderPosition => {
         it(`Verify graphics with ${sliderPosition}% stereo filter overlap`, () => {
           cy.get("#preset-select").should("have.value", "shark.jpg");
-
           cy.get("img").invoke("attr", "src").then((initialImageSrc) => {
             if (preset !== "shark") {
               cy.get("#preset-select").select(`${preset}.jpg`, {force: true});
@@ -24,9 +23,10 @@ describe("Stereogram solver", () => {
 
               expect(numWidth).to.be.gt(0);
               cy.get("img").matchImageSnapshot(`${preset}_original`); // verify source image
-
               cy.moveSliderToPosition(sliderPosition);
-              cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`);
+
+              // by setting failure treshold option to 0.12% we handle the bottom row px difference between images on CI
+              cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`, Cypress.env("GHA") ? {failureThreshold: 0.0012} : {});
             });
           });
         });
@@ -40,7 +40,7 @@ describe("Stereogram solver", () => {
         cy.get("#image-upload").selectFile("cypress/fixtures/lynch_weather_report.png");
         cy.get("#image-upload").invoke("val").should("match", /lynch_weather_report.png$/);
         cy.get("#preset-select").should("have.value", null);
-        cy.get("img").matchImageSnapshot(`lynch_weather_report_original`); // verify uploaded source image
+        cy.get("img").matchImageSnapshot(`lynch_weather_report_original`);
         cy.moveSliderToPosition(sliderPosition);
         cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`);
 
@@ -64,7 +64,7 @@ describe("Stereogram solver", () => {
     cy.get("img").matchImageSnapshot(`planet_100_should_fail`);
   });
 
-  it("Example of difference tolerance setup", () => {
+  it("Example of custom setup of tolerance to difference", () => {
     cy.get("#preset-select").should("have.value", "shark.jpg");
     cy.get("img").invoke("attr", "src").then((initialImageSrc) => {
       cy.get("#preset-select").select(`planet.jpg`, {force: true});

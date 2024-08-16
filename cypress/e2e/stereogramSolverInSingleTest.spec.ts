@@ -24,7 +24,9 @@ describe("Stereogram solver", () => {
 
           sliderPositions.forEach(sliderPosition => {
             cy.moveSliderToPosition(sliderPosition);
-            cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`);
+
+            // by setting failure treshold option to 0.12% we handle the bottom row px difference between images in CI
+            cy.get("canvas").matchImageSnapshot(`${preset}_${sliderPosition}`, Cypress.env("GHA") ? {failureThreshold: 0.0012} : {});
           });
         });
       });
@@ -37,7 +39,9 @@ describe("Stereogram solver", () => {
     cy.get("img").matchImageSnapshot(`lynch_weather_report_original`);
     sliderPositions.forEach(sliderPosition => {
       cy.moveSliderToPosition(sliderPosition);
-      cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`);
+
+      // by setting failure treshold option to 0.12% we handle the bottom row px difference between images in CI
+      cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`, Cypress.env("GHA") ? {failureThreshold: 0.0012} : {});
     });
   });
 });
