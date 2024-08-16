@@ -44,33 +44,36 @@ describe("Stereogram solver", () => {
         cy.moveSliderToPosition(sliderPosition);
         cy.get("canvas").matchImageSnapshot(`lynch_weather_report_${sliderPosition}`);
 
-      })
+      });
     });
-  })
+  });
 
   it("Example of failing snapshot test", () => {
     cy.get("#preset-select").should("have.value", "shark.jpg");
     cy.get("img").invoke("attr", "src").then((initialImageSrc) => {
-    cy.get("#preset-select").select(`planet.jpg`, {force: true});
-    cy.get("#preset-select").should("have.value", `planet.jpg`);
-     cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc);
+      cy.get("#preset-select").select(`planet.jpg`, {force: true});
+      cy.get("#preset-select").should("have.value", `planet.jpg`);
+      cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc);
     });
     cy.moveSliderToPosition(50);
 
-    // observe the snapshot benchmark vs result comparison image file at "../../snapshots/__diff_output__/planet_100_should_fail.diff.png"
+    /**
+     * observe the snapshot benchmark vs result comparison image file at
+     * ../../stereogramSolverInMultipleTests.spec.ts/__diff_output__/planet_100_should_fail.diff.png
+     */
     cy.get("img").matchImageSnapshot(`planet_100_should_fail`);
   });
 
   it("Example of difference tolerance setup", () => {
     cy.get("#preset-select").should("have.value", "shark.jpg");
     cy.get("img").invoke("attr", "src").then((initialImageSrc) => {
-    cy.get("#preset-select").select(`planet.jpg`, {force: true});
-    cy.get("#preset-select").should("have.value", `planet.jpg`);
-     cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc);
+      cy.get("#preset-select").select(`planet.jpg`, {force: true});
+      cy.get("#preset-select").should("have.value", `planet.jpg`);
+      cy.get("img").invoke("attr", "src").should("not.eq", initialImageSrc);
     });
     cy.moveSliderToPosition(50);
 
     // the step with tolerance would pass even if we had difference between rendered graphics and benchmark image
     cy.get("img").matchImageSnapshot(`planet_100_should_fail`, {failureThreshold: 0.0108}); // will tolerate the 1.07421875% difference (2816)
-  })
+  });
 });

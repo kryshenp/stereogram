@@ -1,9 +1,6 @@
-import { defineConfig } from "cypress";
 import * as webpack from "@cypress/webpack-preprocessor";
-import {addMatchImageSnapshotPlugin} from "cypress-image-snapshot/plugin";
-
-// Populate process.env with values from .env file
-require("dotenv").config();
+import {addMatchImageSnapshotPlugin} from "@simonsmith/cypress-image-snapshot/plugin";
+import {defineConfig} from "cypress";
 
 export default defineConfig({
 
@@ -15,12 +12,10 @@ export default defineConfig({
     viewportWidth: 1728,
     setupNodeEvents(on, config) {
       const options = {
-        // send in the options from your webpack.config.js, so it works the same
-        // as your app's code
         webpackOptions: require("./webpack.cypress"),
         watchOptions: {},
       };
-      addMatchImageSnapshotPlugin(on, config);
+      addMatchImageSnapshotPlugin(on);
       on("file:preprocessor", webpack(options));
 
       return config;
