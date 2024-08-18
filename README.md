@@ -97,7 +97,7 @@ The CI pipeline produces multiple artifacts that can be useful for analyzing tes
 
 #### Diff Image Example:
 
-![For example:](cypress/fixtures/snapshot_difference_example.diff.png "Example of detected visual difference")
+![For example:](assets/snapshot_difference_example.diff.png "Example of detected visual difference")
 
 ## Notes on Improvements
 
@@ -106,10 +106,10 @@ Although the solution is functional and meets the requirements of the technical 
 1.  A custom `failureThreshold` in the `matchImageSnapshot` command was set in several tests because, despite running the tests in a Docker environment, the benchmark snapshots were captured on a local machine while running the tests with the `updateSnapshots=true` option on an Apple M1 machine with ARM architecture. In GHA CI, the machine with Intel or AMD-based x86_64 (64-bit) architecture captures a difference in the rendered bottom pixel row of the image. Even though this difference can be ignored in the scope of this task, it affects 3 to 4 hundred pixels and can be problematic for more precise comparisons. The solution could be to use an ARM-based runner, check different Docker images from Cypress, or attempt to create a custom Docker image where the graphics are rendered correctly. An alternative and less costly solution would be to generate benchmark images in CI and download them from artifacts to the project. The downside of that approach would be the need to manually check the correctness of each generated benchmark image.
 
 _Observe the bottom row in the local vs CI rendering difference example:_
-![Difference example:](cypress/fixtures/local_vs_ci_diff_example.jpg)
+![Difference example:](assets/local_vs_ci_diff_example.jpg)
 
 _Bottom row in detail_
-![Difference example:](cypress/fixtures/local_vs_ci_diff_detail.png)
+![Difference example:](assets/local_vs_ci_diff_detail.png)
 
 2. When running the tests without using Docker, the benchmark snapshots produced are of a completely different size than those in Docker. These benchmark snapshots wouldn't be consistent with CI-captured snapshots. It is necessary to further configure the environment to eliminate this difference.Moreover, the snapshots produced in the test run without using Docker are saved into the _cypress/snapshots_ folder. In contrast, the Docker solution saves snapshots into the folders mentioned in [Visual results](#visual-results). f the project continues to develop, it will be necessary to unify the benchmark snapshots location folder.
 
