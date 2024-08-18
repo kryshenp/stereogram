@@ -28,7 +28,7 @@ jobs:
 
             - name: Run Cypress tests in Docker
               run:
-                  docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:13.3.3 \
+                  docker run -v ${{ github.workspace }}:/e2e -w /e2e cypress/included:latest \
                   npx ts-node cypress run --env GHA=true,updateSnapshots=${{ env.UPDATE_SNAPSHOTS }}
 
             - name: Store Test Results
